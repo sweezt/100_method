@@ -46,6 +46,7 @@ int func(int n)
 {
     int i;                     //循环控制变量
 	INT *tmp = NULL;
+    INT *last = NULL;
 
     INT *head = NULL;
 	head = my_malloc();
@@ -85,14 +86,17 @@ int func(int n)
 	while(NULL != head->next)
 	{
         tmp = head->next;
+		last = head;
 	    while(NULL != tmp->next)
 		{
 		    tmp = tmp->next;
+			last = last->next;
 		}
 
 		printf("%d",tmp->num);
-        free(tmp);
-		tmp = NULL;
+        
+		last = NULL;
+		free(tmp);
 	}
  
     return 0;
