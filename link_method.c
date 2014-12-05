@@ -56,14 +56,14 @@ int func(int n)
 	for(i=2; i<=n; i++)
 	{
         tmp = head->next;
-	    while(NULL == tmp)
+	    while(NULL != tmp)
 		{
 		    tmp->num = tmp->num * i;
 			tmp = tmp-<next;
 		}
 
         tmp = head->next;
-		while(NULL == tmp)
+		while(NULL != tmp)
 		{
 		    if(tmp->num >= 10){
 			    if(NULL == tmp->next)
@@ -78,21 +78,30 @@ int func(int n)
 			tmp = tmp->next;
 		}
 	}
+
+	while(NULL != head->next)
+	{
+        tmp = head->next;
+	    while(NULL != tmp->next)
+		{
+		    tmp = tmp->next;
+		}
+
+		printf("%d",tmp->num);
+        free(tmp);
+		tmp = NULL;
+	}
  
     return 0;
 }
 
-
-int display(INT *head)
-{
-    if(NULL == head)
-	{
-	    return 1;
-	}
-
-	while()
-}
 int main()
 {
-    
+    int n;
+
+	n = 100;
+
+	func(100);
+
+	return 0;
 }
