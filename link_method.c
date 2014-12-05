@@ -47,11 +47,14 @@ int func(int n)
     int i;                     //循环控制变量
 	INT *tmp = NULL;
 
-    INT *head = my_malloc;
-    
-    INT *first = my_malloc;
+    INT *head = NULL;
+	head = my_malloc();
+    inti_node(head,0);
+
+    INT *first = NULL;
+	first = my_malloc();
 	inti_node(first, 1);
-    insertlink(head, node);
+    insertlink(head, first);
 
 	for(i=2; i<=n; i++)
 	{
@@ -59,7 +62,7 @@ int func(int n)
 	    while(NULL != tmp)
 		{
 		    tmp->num = tmp->num * i;
-			tmp = tmp-<next;
+			tmp = tmp->next;
 		}
 
         tmp = head->next;
@@ -101,7 +104,7 @@ int main()
 
 	n = 100;
 
-	func(100);
+	func(n);
 
 	return 0;
 }
