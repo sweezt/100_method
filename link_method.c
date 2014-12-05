@@ -79,9 +79,20 @@ int func(int n)
 		}
 	}
  
+    return 0;
 }
 
 
+int display(INT *head)
+{
+    if(NULL == head)
+	{
+	    return 1;
+	}
+
+	while()
+}
 int main()
 {
+    
 }
