@@ -39,7 +39,7 @@ int insertlink(INT *head, INT *node)
 
     node->next = head->next;
     head->next = node;
-	head->next->last = node;
+	node->next->last = node;
 	node->last = head;
 
 	return 0;
@@ -69,9 +69,10 @@ int func(int n)
 	init_node(first, 1);
     insertlink(head, first);
 
-
-//printf("initial success\n");
-
+//printf("head->num=%d\n",head->num);
+//printf("head->next->num=%d\n",head->next->num);
+//printf("tail->num=%d\n",tail->num);
+//printf("tail->last->num=%d\n",tail->last->num);
 
 	for(i=2; i<=n; i++)
 	{
@@ -84,6 +85,8 @@ int func(int n)
 		}
 //if(i == 30){break;}
         tmp = tail->last;
+//printf("tmp->last->num=%d\n",tmp->next->num);
+//printf("tmp->num=%d\n",tmp->num);
 		while(-1 != tmp->num)
 		{
 		    if(tmp->num >= 10)
@@ -97,7 +100,7 @@ int func(int n)
 
                 tmp->last->num = tmp->num / 10 + tmp->last->num;
 				tmp->num = tmp->num % 10;
-//printf("tmp->next->num=%d\n",tmp->next->num);
+//printf("tmp->last->num=%d\n",tmp->next->num);
 //printf("tmp->num=%d\n",tmp->num);
 			}
 
@@ -109,12 +112,12 @@ int func(int n)
 //printf("function success\n");
 
     tmp = head->next;
-	free(tmp);
 
 	while(NULL != tmp->next)
 	{
 		printf("%d",tmp->num);
-        tmp = tmp->nex;
+        tmp = tmp->next;
+//printf("loop times\n");
 		free(tmp->last);
 	}
 
