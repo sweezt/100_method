@@ -5,6 +5,7 @@ typedef struct intnode
 {
     int num;
 	struct intnode *next;
+	struct intnode *last;
 }INT;
 
 //内存分配函数
@@ -12,6 +13,7 @@ INT* my_malloc()
 {
     INT *tmp = (INT*)malloc(sizeof(INT));
 	tmp->next = NULL;
+	tmp->last = NULL;
 
 	return tmp;
 }
@@ -37,6 +39,8 @@ int insertlink(INT *head, INT *node)
 
     node->next = head->next;
     head->next = node;
+	head->next->last = node;
+	node->last = head;
 
 	return 0;
 }
@@ -46,13 +50,21 @@ int func(int n)
 {
     int i;                     //循环控制变量
 	INT *tmp = NULL;
-    INT *last = NULL;
+	INT *new = NULL;
 
     INT *head = NULL;
-	head = my_malloc();
-    init_node(head,0);
+	INT *tail = NULL;
 
     INT *first = NULL;
+
+	head = my_malloc();
+	init_node(head,-1);
+	tail = my_malloc();
+	init_node(tail,-1);
+
+	head->next = tail;
+	tail->last = head;
+
 	first = my_malloc();
 	init_node(first, 1);
     insertlink(head, first);
@@ -64,54 +76,49 @@ int func(int n)
 	for(i=2; i<=n; i++)
 	{
         tmp = head->next;
-	    while(NULL != tmp)
+	    while(-1 != tmp->num)
 		{
 		    tmp->num = tmp->num * i;
 //printf("tmp->num=%d\n",tmp->num);
 			tmp = tmp->next;
 		}
 //if(i == 30){break;}
-        tmp = head->next;
-		last = head;
-		while(NULL != tmp)
+        tmp = tail->last;
+		while(-1 != tmp->num)
 		{
 		    if(tmp->num >= 10)
 			{
-			    if(NULL == tmp->next)
+			    if(-1 == tmp->last->num)
 				{
-				    tmp->next = my_malloc();
-                    init_node(tmp->next,0);
+				    new = my_malloc();
+                    init_node(new,0);
+					insertlink(head,new);
 				}
 
-                tmp->next->num = tmp->num / 10 + tmp->next->num;
+                tmp->last->num = tmp->num / 10 + tmp->last->num;
 				tmp->num = tmp->num % 10;
 //printf("tmp->next->num=%d\n",tmp->next->num);
 //printf("tmp->num=%d\n",tmp->num);
 			}
 
-			tmp = tmp->next;
+			tmp = tmp->last;
 		}
 	}
 
 
 //printf("function success\n");
 
+    tmp = head->next;
+	free(tmp);
 
-	while(NULL != head->next)
+	while(NULL != tmp->next)
 	{
-        tmp = head->next;
-		last = head;
-	    while(NULL != tmp->next)
-		{
-		    tmp = tmp->next;
-			last = last->next;
-		}
-
 		printf("%d",tmp->num);
-        
-		last->next = NULL;
-		free(tmp);
+        tmp = tmp->nex;
+		free(tmp->last);
 	}
+
+	free(tail);
  
     return 0;
 }
